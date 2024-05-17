@@ -1,0 +1,68 @@
+﻿@model DataAccessLayer.Models.Domain.Department
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@{
+    //Checks if TempData["Message"] contains a value
+    if (TempData["Message"] != null)
+    {
+        if (TempData["Message"] == "Success")
+        {
+            //Displays a pop up message if TempData["Message"] is equal to "Success"
+            <div class="alert alert-success" role="alert">
+                Department has been added successfully.
+                Click here to <a asp-action="Index" class="alert-link">go back to list</a>.
+            </div>
+        }
+        else if (TempData["Message"] == "Failed")
+        {
+            //Displays a pop up message if TempData["Message"] is equal to "Failed"
+            <div class="alert alert-success" role="alert">
+                Department creation has FAILED.
+                Click here to <a asp-action="Index" class="alert-link">go back to list</a>.
+            </div>
+        }
+        else
+        {
+            //Displays a pop up message TempData["Message"] if something is wrong with the code/database
+            <div class="alert alert-success" role="alert">
+                @TempData["Message"].
+                Click here to <a asp-action="Index" class="alert-link">go back to list</a>.
+            </div>
+        }
+    }
+}
+
+<!--Heading-->
+<h1 class="display-2">Create new Department</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!--Name Control-->
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <!--Create Button-->
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

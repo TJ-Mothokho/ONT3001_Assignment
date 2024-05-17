@@ -1,0 +1,77 @@
+﻿@model DataAccessLayer.Models.Domain.Department
+
+<!--add a title to the page-->
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<!--check if there is a message in TempData-->
+@{
+    if (TempData["Message"] != null)
+    {
+        <!--check if the message is "Success"-->
+        if (TempData["Message"] == "Success")
+        {
+            <!--display a success message with a link to the Index page-->
+            <div class="alert alert-success" role="alert">
+                Department has been updated successfully. <a asp-action="Index" class="btn btn-primary">Ok</a>
+            </div>
+        }
+        else if (TempData["Message"] == "Failed")
+        {
+            <!--check if the message is "Failed"-->
+
+            <!--display a failure message with a link to the Index page-->
+            <div class="alert alert-danger" role="alert">
+                Update has FAILED.
+                Click here to <a asp-action="Index" class="alert-link">go back to list</a>.
+            </div>
+        }
+        else
+        {
+            <!--if the message is not "Success" or "Failed"-->
+
+            <!--display a TempData error message with a link to the Index page-->
+            <div class="alert alert-danger" role="alert">
+                @TempData["Message"].
+                Click here to <a asp-action="Index" class="alert-link">go back to list</a>.
+            </div>
+        }
+    }
+}
+
+<!--Heading-->
+<h1 class="display-2">Edit Department</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!--DepartmentID Hidden Control-->
+            <div class="form-group">
+                <input asp-for="DepartmentID" type="hidden" />
+            </div>
+
+            <!--Name Control-->
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <!--add a submit button-->
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

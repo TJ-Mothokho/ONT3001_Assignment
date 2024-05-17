@@ -1,0 +1,72 @@
+﻿@model DataAccessLayer.Models.Domain.Department;
+
+<!--add a title to the page-->
+@{
+    ViewData["Title"] = "Delete";
+}
+<!--check if there is a message in TempData-->
+@{
+    if (TempData["Message"] != null)
+    {
+        <!--check if the message is "Success"-->
+        if (TempData["Message"] == "Success")
+        {
+            <!--display a success message with a link to the Index page-->
+            <div class="alert alert-success" role="alert">
+                <p class="col-sm-9">Department has been deleted successfully.</p> <a asp-action="Index" class="btn btn-primary">Ok</a>
+            </div>
+        }
+        else if (TempData["Message"] == "Failed")
+        {
+            <!--check if the message is "Failed"-->
+            
+            <!--display a failure message with a link to the Index page-->
+            <div class="alert alert-danger" role="alert">
+                Delete has FAILED.
+                Click here to <a asp-action="Index" class="alert-link">go back to list</a>.
+            </div>
+        }
+        else
+        {
+            <!--if the message is not "Success" or "Failed"-->
+
+            <!--display a TempData error message with a link to the Index page-->
+            <div class="alert alert-danger" role="alert">
+                @TempData["Message"].
+                Click here to <a asp-action="Index" class="alert-link">go back to list</a>.
+            </div>
+        }
+    }
+}
+<h1 class="Display-4">Delete</h1>
+<!--display a confirmation message before deleting the department-->
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Department</h4>
+    <hr />
+    <!--Display information about the Department that is about to be deleted-->
+    <dl class="row">
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.DepartmentID)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.DepartmentID)
+        </dd>
+        <dt class = "col-sm-3">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-9">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete" method="post">
+    <!--Store department information from the Model-->
+        <input asp-for="DepartmentID" type="hidden" />
+        <input asp-for="Name" type="hidden" />
+        
+        <!--Delete button-->
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

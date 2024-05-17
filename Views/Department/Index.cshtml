@@ -1,0 +1,32 @@
+﻿@model IEnumerable<DataAccessLayer.Models.Domain.Department>;
+<!--add a title to the page-->
+@{
+    ViewBag.Title = "Index";
+}
+
+<h1 class="display-2">Departments</h1>
+<!--Create button to add a new department-->
+<a asp-action="Create" class="btn btn-primary">Create New</a>
+
+<!--Table of list of departments-->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Department Name</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>
+                    <!--Edit and Delete buttons-->
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.DepartmentID">Edit</a> |
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.DepartmentID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+ </table>

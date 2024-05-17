@@ -1,0 +1,84 @@
+﻿@model DataAccessLayer.Models.Domain.Employee
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@{
+    //Checks if TempData["Message"] contains a value
+    if (TempData["Message"] != null)
+    {
+        if (TempData["Message"] == "Success")
+        {
+            //Displays a pop up message if TempData["Message"] is equal to "Success"
+            <div class="alert alert-success" role="alert">
+                Employee has been added successfully.
+                Click here to <a asp-action="Index" class="alert-link">go back to list</a> or <a asp-action="Create" class="alert-link">add another employee</a>.
+            </div>
+        }
+        else if (TempData["Message"] == "Failed")
+        {
+            //Displays a pop up message if TempData["Message"] is equal to "Failed"
+            <div class="alert alert-success" role="alert">
+                Employee creation has FAILED.
+                Click here to <a asp-action="Index" class="alert-link">go back to list</a>.
+            </div>
+        }
+        else
+        {
+            //Displays a pop up message TempData["Message"] if something is wrong with the code/database
+            <div class="alert alert-success" role="alert">
+                @TempData["Message"].
+                Click here to <a asp-action="Index" class="alert-link">go back to list</a>.
+            </div>
+        }
+    }
+}
+
+<!--Heading-->
+<h1 class="display-2">Add an Employee</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <!--Form starts here-->
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <!--First Name control-->
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <!--Last Name control-->
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <!--Department DropDown-->
+            <div class="form-group">
+                <label asp-for="DepartmentID" class="control-label"></label>
+                <select asp-for="DepartmentID" class="form-control" asp-items="@ViewBag.DepartmentList">
+                    <option value="">Select an option</option>
+                </select>
+                <span asp-validation-for="DepartmentID" class="text-danger"></span>
+            </div>
+
+            <!--Create Button-->
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
